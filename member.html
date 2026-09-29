@@ -1,1 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>National Specialist Engine - Team</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0A285F; --red: #B22234; --gold: #D4AF37; --green: #27ae60;
+            --glass: rgba(255, 255, 255, 0.95);
+        }
 
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--navy); padding: 1rem 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .logo { color: white; font-weight: 800; font-size: 1.2rem; }
+        nav a {
+            color: white; text-decoration: none; margin-left: 20px;
+            font-size: 0.85rem; opacity: 0.8; transition: 0.3s;
+        }
+        nav a:hover { opacity: 1; color: var(--gold); }
+
+        .container { max-width: 900px; margin: 40px auto; width: 95%; }
+
+        h1 {
+            text-align: center; color: var(--navy); font-size: 1.8rem;
+            font-weight: 800; margin-bottom: 8px;
+        }
+        .subtitle {
+            text-align: center; color: #64748b; font-size: 0.9rem; margin-bottom: 35px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .member-card {
+            background: var(--glass);
+            border-radius: 28px;
+            padding: 28px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.4);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 28px 70px rgba(0,0,0,0.13);
+        }
+
+        .card-top {
+            display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: linear-gradient(135deg, #0A285F, #1a4a9f);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(10,40,95,0.3);
+        }
+
+        .member-info { flex: 1; }
+        .member-name {
+            font-size: 1.2rem; font-weight: 800; color: var(--navy); margin-bottom: 2px;
+        }
+        .member-role {
+            font-size: 0.72rem; font-weight: 700; color: #64748b;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+
+        .stats-row {
+            display: grid; grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px; margin-bottom: 18px;
+        }
+
+        .stat-box {
+            background: #f8fafc; border-radius: 12px; padding: 12px 8px;
+            text-align: center;
+        }
+        .stat-num {
+            font-size: 1.4rem; font-weight: 800; color: var(--navy);
+        }
+        .stat-label {
+            font-size: 0.65rem; font-weight: 700; color: #94a3b8;
+            text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px;
+        }
+
+        .badges-section { }
+        .badges-title {
+            font-size: 0.7rem; font-weight: 800; color: #64748b;
+            text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
+        }
+        .badges-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .badge {
+            background: white; border: 1.5px solid #e2e8f0;
+            border-radius: 20px; padding: 5px 10px;
+            font-size: 0.75rem; font-weight: 700; color: #64748b;
+            display: flex; align-items: center; gap: 5px;
+            transition: 0.2s;
+        }
+        .badge.earned {
+            background: linear-gradient(135deg, #0A285F, #1a4a9f);
+            color: white; border-color: transparent;
+            box-shadow: 0 3px 10px rgba(10,40,95,0.25);
+        }
+        .badge.locked { opacity: 0.4; }
+
+        .view-btn {
+            display: flex; align-items: center; justify-content: center;
+            gap: 6px; margin-top: 18px;
+            color: var(--navy); font-size: 0.8rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            opacity: 0.6;
+        }
+        .view-btn::after { content: "›"; font-size: 1.1rem; }
+
+        /* Modal */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(10,40,95,0.5); backdrop-filter: blur(4px);
+            z-index: 100; align-items: center; justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+
+        .modal {
+            background: white; border-radius: 28px; padding: 35px;
+            max-width: 480px; width: 90%; position: relative;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.2);
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute; top: 18px; right: 20px;
+            background: none; border: none; font-size: 1.5rem;
+            cursor: pointer; color: #94a3b8; line-height: 1;
+        }
+        .modal-avatar {
+            font-size: 3.5rem; margin-bottom: 12px; display: block; text-align: center;
+        }
+        .modal-name {
+            font-size: 1.6rem; font-weight: 800; color: var(--navy);
+            text-align: center; margin-bottom: 4px;
+        }
+        .modal-role {
+            font-size: 0.75rem; font-weight: 700; color: #94a3b8;
+            text-transform: uppercase; text-align: center; margin-bottom: 24px;
+        }
+
+        .modal-stats {
+            display: grid; grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px; margin-bottom: 24px;
+        }
+        .modal-stat {
+            background: #f8fafc; border-radius: 14px; padding: 16px 8px; text-align: center;
+        }
+        .modal-stat .num { font-size: 1.8rem; font-weight: 800; color: var(--navy); }
+        .modal-stat .lbl { font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-top: 3px; }
+
+        .modal-badges-title {
+            font-size: 0.7rem; font-weight: 800; color: #64748b;
+            text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px;
+        }
+        .modal-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+
+        .all-badge {
+            border-radius: 20px; padding: 7px 14px;
+            font-size: 0.8rem; font-weight: 700;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .all-badge.earned {
+            background: linear-gradient(135deg, #0A285F, #1a4a9f);
+            color: white; box-shadow: 0 3px 10px rgba(10,40,95,0.25);
+        }
+        .all-badge.locked {
+            background: #f1f5f9; color: #94a3b8;
+            border: 1.5px dashed #cbd5e1;
+        }
+
+        .quiz-btn {
+            width: 100%; background: var(--navy); color: white;
+            border: none; padding: 15px; border-radius: 14px;
+            font-weight: 700; font-size: 1rem; cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-btn:hover { background: #1a4a9f; }
+
+        .reset-btn {
+            width: 100%; background: none; color: #94a3b8;
+            border: 1.5px solid #e2e8f0; padding: 10px; border-radius: 14px;
+            font-weight: 600; font-size: 0.8rem; cursor: pointer;
+            margin-top: 8px; transition: 0.2s;
+        }
+        .reset-btn:hover { color: var(--red); border-color: var(--red); }
+
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">WE THE PEOPLE</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="team.html">Team</a>
+        <a href="practice.html">Practice</a>
+        <a href="evidence.html">Charts</a>
+        <a href="flashcards.html">Flashcards</a>
+        <a href="quizzes.html">Quizzes</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h1>Team Members</h1>
+    <p class="subtitle">Track progress, earn badges, and view each member's evidence mastery.</p>
+
+    <div class="grid" id="teamGrid"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modalContent">
+        <button class="modal-close" onclick="closeModal()">×</button>
+        <span class="modal-avatar" id="mAvatar"></span>
+        <div class="modal-name" id="mName"></div>
+        <div class="modal-role" id="mRole"></div>
+        <div class="modal-stats" id="mStats"></div>
+        <div class="modal-badges-title">Badges</div>
+        <div class="modal-badges" id="mBadges"></div>
+        <button class="quiz-btn" onclick="goToQuiz()">📚 Start Quiz</button>
+        <button class="reset-btn" onclick="resetMember()">Reset Progress</button>
+    </div>
+</div>
+
+<script>
+const MEMBERS = [
+    { key: "Luna",  emoji: "🦭" },
+    { key: "Sarah", emoji: "🦋" },
+    { key: "Evan",  emoji: "🏈" },
+    { key: "Bekim", emoji: "⭐️" }
+];
+
+const ALL_BADGES = [
+    { id: "first",    emoji: "🎯", label: "First Answer",    desc: "Answer your first question correctly",  check: s => s.correct >= 1 },
+    { id: "streak5",  emoji: "🔥", label: "On Fire",         desc: "Get a streak of 5",                    check: s => s.bestStreak >= 5 },
+    { id: "correct10",emoji: "⭐", label: "10 Correct",      desc: "Get 10 correct answers",               check: s => s.correct >= 10 },
+    { id: "correct25",emoji: "🏅", label: "25 Correct",      desc: "Get 25 correct answers",               check: s => s.correct >= 25 },
+    { id: "streak10", emoji: "💥", label: "Unstoppable",     desc: "Get a streak of 10",                   check: s => s.bestStreak >= 10 },
+    { id: "q1done",   emoji: "📖", label: "Q1 Master",       desc: "Complete Q1 with 80%+ accuracy",       check: s => s.q1accuracy >= 80 },
+    { id: "q2done",   emoji: "📗", label: "Q2 Master",       desc: "Complete Q2 with 80%+ accuracy",       check: s => s.q2accuracy >= 80 },
+    { id: "q3done",   emoji: "📘", label: "Q3 Master",       desc: "Complete Q3 with 80%+ accuracy",       check: s => s.q3accuracy >= 80 },
+    { id: "allmaster",emoji: "🏆", label: "Full Specialist", desc: "Master all three questions",           check: s => s.q1accuracy >= 80 && s.q2accuracy >= 80 && s.q3accuracy >= 80 },
+];
+
+function getStats(key) {
+    const raw = localStorage.getItem('stats_' + key);
+    return raw ? JSON.parse(raw) : {
+        correct: 0, attempted: 0, bestStreak: 0,
+        minutesStudied: 0,
+        q1correct: 0, q1attempted: 0,
+        q2correct: 0, q2attempted: 0,
+        q3correct: 0, q3attempted: 0,
+    };
+}
+
+function enrichStats(s) {
+    s.q1accuracy = s.q1attempted > 0 ? Math.round((s.q1correct / s.q1attempted) * 100) : 0;
+    s.q2accuracy = s.q2attempted > 0 ? Math.round((s.q2correct / s.q2attempted) * 100) : 0;
+    s.q3accuracy = s.q3attempted > 0 ? Math.round((s.q3correct / s.q3attempted) * 100) : 0;
+    return s;
+}
+
+function getEarnedBadges(stats) {
+    const s = enrichStats({...stats});
+    return ALL_BADGES.map(b => ({ ...b, earned: b.check(s) }));
+}
+
+function formatTime(mins) {
+    if (mins < 60) return mins + 'm';
+    return Math.floor(mins / 60) + 'h ' + (mins % 60) + 'm';
+}
+
+function renderCards() {
+    const grid = document.getElementById('teamGrid');
+    grid.innerHTML = '';
+    MEMBERS.forEach(m => {
+        const stats = getStats(m.key);
+        const badges = getEarnedBadges(stats);
+        const earnedCount = badges.filter(b => b.earned).length;
+        const accuracy = stats.attempted > 0 ? Math.round((stats.correct / stats.attempted) * 100) : 0;
+
+        const previewBadges = ALL_BADGES.slice(0, 4).map(b => {
+            const earned = badges.find(x => x.id === b.id)?.earned;
+            return `<span class="badge ${earned ? 'earned' : 'locked'}">${b.emoji} ${b.label}</span>`;
+        }).join('');
+
+        grid.innerHTML += `
+        <div class="member-card" onclick="openModal('${m.key}')">
+            <div class="card-top">
+                <div class="avatar">${m.emoji}</div>
+                <div class="member-info">
+                    <div class="member-name">${m.key}</div>
+                </div>
+            </div>
+            <div class="stats-row">
+                <div class="stat-box">
+                    <div class="stat-num">${stats.correct}</div>
+                    <div class="stat-label">Correct</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num">${accuracy}%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num">${earnedCount}</div>
+                    <div class="stat-label">Badges</div>
+                </div>
+            </div>
+            <div class="badges-section">
+                <div class="badges-title">Recent Badges</div>
+                <div class="badges-row">${previewBadges}</div>
+            </div>
+            <div class="view-btn">View Profile</div>
+        </div>`;
+    });
+}
+
+let currentMember = null;
+
+function openModal(key) {
+    currentMember = key;
+    const m = MEMBERS.find(x => x.key === key);
+    const stats = getStats(key);
+    const s = enrichStats({...stats});
+    const badges = getEarnedBadges(stats);
+    const accuracy = stats.attempted > 0 ? Math.round((stats.correct / stats.attempted) * 100) : 0;
+
+    document.getElementById('mAvatar').textContent = m.emoji;
+    document.getElementById('mName').textContent = m.key;
+
+    document.getElementById('mStats').innerHTML = `
+        <div class="modal-stat"><div class="num">${stats.correct}</div><div class="lbl">Correct</div></div>
+        <div class="modal-stat"><div class="num">${accuracy}%</div><div class="lbl">Accuracy</div></div>
+        <div class="modal-stat"><div class="num">${stats.bestStreak}</div><div class="lbl">Best Streak</div></div>
+        <div class="modal-stat"><div class="num">${s.q1accuracy}%</div><div class="lbl">Q1 Score</div></div>
+        <div class="modal-stat"><div class="num">${s.q2accuracy}%</div><div class="lbl">Q2 Score</div></div>
+        <div class="modal-stat"><div class="num">${s.q3accuracy}%</div><div class="lbl">Q3 Score</div></div>
+    `;
+
+    document.getElementById('mBadges').innerHTML = badges.map(b =>
+        `<span class="all-badge ${b.earned ? 'earned' : 'locked'}" title="${b.desc}">${b.emoji} ${b.label}</span>`
+    ).join('');
+
+    document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    currentMember = null;
+}
+
+function goToQuiz() {
+    if (currentMember) window.location.href = `quizzes.html?member=${currentMember}`;
+}
+
+function resetMember() {
+    if (!currentMember) return;
+    if (confirm(`Reset all progress for ${currentMember}?`)) {
+        localStorage.removeItem('stats_' + currentMember);
+        closeModal();
+        renderCards();
+    }
+}
+
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+
+renderCards();
+</script>
+</body>
+</html>
