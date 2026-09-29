@@ -1,1 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <title>National Practice Hub | WTP</title>
+    <style>
+        :root { --navy: #0A285F; --red: #B22234; --gold: #D4AF37; --green: #27ae60; --glass: rgba(255, 255, 255, 0.95); }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f0f4f8; min-height: 100vh; }
+        header { background: var(--navy); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--gold); color: white; }
+        .logo { font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
+        .container { max-width: 1000px; margin: 30px auto; width: 90%; }
+        .selector-box { background: var(--navy); padding: 25px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .selector-box label { color: var(--gold); font-size: 0.7rem; font-weight: 800; display: block; margin-bottom: 8px; text-transform: uppercase; }
+        select { background: rgba(255,255,255,0.15); border: 2px solid var(--gold); color: white; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-size: 1rem; font-weight: bold; }
+        #lobby { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .game-card { background: white; padding: 30px 15px; border-radius: 20px; text-align: center; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; }
+        .game-card:hover { transform: translateY(-10px); border-color: var(--gold); }
+        #arena { display: none; background: white; border-radius: 25px; padding: 40px; text-align: center; box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+        .back-btn { background: var(--red); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-bottom: 20px; font-weight: bold; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 20px; }
+        .tile { height: 110px; background: var(--navy); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.6rem; padding: 8px; transition: 0.2s; border: 2px solid transparent; }
+        .tile.flipped { background: var(--gold); color: black; font-weight: bold; }
+        .tile.matched { visibility: hidden; }
+        .display-box { background: #f8fafc; padding: 30px; border-radius: 15px; margin-bottom: 20px; font-size: 1.2rem; font-weight: bold; border: 2px solid var(--navy); min-height: 80px; display: flex; align-items: center; justify-content: center; color: var(--navy); }
+        .mc-container { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .mc-btn { padding: 18px; border-radius: 10px; border: 2px solid #e1e8ed; background: white; cursor: pointer; font-weight: 600; text-align: left; transition: 0.2s; font-size: 0.95rem; }
+        .mc-btn:hover { background: #f0f4f8; border-color: var(--gold); }
+        .action-btn { flex: 1; padding: 20px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; color: white; background: var(--navy); }
+    </style>
+</head>
+<body>
 
+<header>
+    <div class="logo">WTP National Training Hub</div>
+    <div style="font-size: 0.8rem; font-weight: bold;">Practice</div>
+</header>
+
+<div class="container">
+    <div class="selector-box">
+        <label>Select Unit Question</label>
+        <select id="topicSwitch" onchange="exitGame()">
+            <option value="Q1">Q1</option>
+            <option value="Q2">Q2</option>
+            <option value="Q3">Q3</option>
+        </select>
+    </div>
+
+    <div id="lobby">
+        <div class="game-card" onclick="launch('match')"><div>🃏</div><h3>Evidence Match</h3></div>
+        <div class="game-card" onclick="launch('sort')"><div>⚖️</div><h3>Power Sorter</h3></div>
+        <div class="game-card" onclick="launch('mc')"><div>🎯</div><h3>Multichoice</h3></div>
+    </div>
+
+    <div id="arena">
+        <button class="back-btn" onclick="exitGame()">← BACK TO LOBBY</button>
+        <div id="stage"></div>
+    </div>
+</div>
+
+<script>
+const database = {
+    "Q1": {
+        match: [
+            {t: "Federalist 70", d: "Hamilton: A single executive ensures 'energy', 'secrecy', and 'dispatch' while maintaining clear accountability."},
+            {t: "Marbury v. Madison", d: "Established judicial review; the Court's inherent power to strike down laws that conflict with the Constitution."},
+            {t: "Federalist 51", d: "Madison's design: 'Ambition must be made to counteract ambition' by giving each branch the means to resist overreach."},
+            {t: "Hampton v. US", d: "Created the 'Intelligible Principle' test; Congress can delegate as long as it provides clear guidance for the agency."},
+            {t: "Humphrey's Executor", d: "Rules the President cannot fire independent agency heads at will; they need 'just cause' to protect independence."},
+            {t: "Federalist 63", d: "Argues for the Senate as a stable 'fence' against the 'temperate' and often 'erroneous' passions of the public."},
+            {t: "US v. Nixon", d: "Executive privilege exists but is not absolute; it cannot be used to withhold evidence in a criminal investigation."},
+            {t: "INS v. Chadha", d: "Struck down the legislative veto; all laws must follow the Article I process of bicameralism and presentment."},
+            {t: "1981 Shutdown", d: "Two-day funding gap triggered by Reagan's veto; early example of budget gridlock and separation of powers tension."},
+            {t: "1986 Shutdown", d: "A standoff over welfare (AFDC) and domestic spending; demonstrates Congress and Executive clashing on budget power."},
+            {t: "Article I, Sec. 8", d: "Lists the 18 enumerated powers of Congress; the legal floor for what authority can actually be delegated to agencies."},
+            {t: "Legislative Gridlock", d: "Occurs when partisan dysfunction prevents the legislature from fulfilling its duty to pass laws or fund the government."},
+            {t: "Federalist 78", d: "Hamilton: The Judiciary is 'least dangerous' because it has 'neither sword nor purse,' only the power of judgment."},
+            {t: "Mistretta v. US", d: "Upholds the Sentencing Commission; the Court found the delegation of guidelines was constitutional and specific enough."},
+            {t: "Youngstown v. Sawyer", d: "Justice Jackson's 3-tier framework: Presidential power is weakest when it contradicts the expressed will of Congress."},
+            {t: "Vesting Clause", d: "Article II, Sec 1: Grants 'The Executive Power' to a single President; the core argument for the Unitary Executive theory."},
+            {t: "Taking Care Clause", d: "Article II requirement that the President ensure all laws are 'faithfully executed,' regardless of personal policy preference."},
+            {t: "Gundy v. US", d: "Dissenting justices expressed a desire to revive the 'Non-Delegation Doctrine' to limit broad agency power."},
+            {t: "Federalist 48", d: "Madison warns that the legislative branch is the 'impetuous vortex' that naturally tries to absorb all other powers."},
+            {t: "Appointments Clause", d: "Requires the President to appoint 'Officers of the US' with the advice and consent of the Senate; a check on cronyism."},
+            {t: "Curtiss-Wright", d: "The Court described the President as the 'Sole Organ' of the nation in the field of international relations."},
+            {t: "War Powers Res.", d: "1973 law requiring the President to consult Congress before committing troops; a check on Article II Commander-in-Chief power."},
+            {t: "Necessary & Proper", d: "The 'Elastic Clause'; gives Congress power to make laws required to carry out its enumerated duties."},
+            {t: "A.U.M.F. (2002)", d: "Broad delegation of power allowing the President to use 'necessary and appropriate' force against terrorist threats."},
+            {t: "Executive Orders", d: "Directives to agencies that have the force of law; used to bypass Congress but limited to existing statutory authority."},
+            {t: "Fed 62", d: "Argues Senate stability prevents 'mutable' laws that favor the few over the many."},
+            {t: "Article III", d: "Vests the 'judicial power' in one Supreme Court and such inferior courts as Congress chooses to establish."},
+            {t: "Rules Enabling Act", d: "Example of Congress delegating procedural power to the Judiciary to create the Federal Rules of Civil Procedure."},
+            {t: "Federalist 10", d: "Madison: A large, diverse republic prevents any one faction from gaining total control over the government."},
+            {t: "Plaut v. Spendthrift", d: "Separation of Powers: Congress cannot pass a law that forces the courts to reopen a final, closed case."},
+            {t: "Article I, Sec. 7", d: "The Presentment Clause; requires every bill to be signed by the President or repassed over a veto."},
+            {t: "Fed 71", d: "Hamilton argues for a 4-year term to ensure the President has enough time to remain independent of temporary passions."},
+            {t: "Hayburn's Case", d: "Early 1792 case: Courts cannot be forced to perform administrative duties that are then reviewable by the Executive."},
+            {t: "Morrison v. Olson", d: "Upholds the Independent Counsel Act; found that it did not violate the Appointments Clause or Separation of Powers."},
+            {t: "Myers v. US", d: "Ruled that the President has the exclusive power to remove purely executive officers without Senate approval."},
+            {t: "Clinton v. New York", d: "Struck down the Line Item Veto; the President cannot edit bills after they are passed by Congress."},
+            {t: "Zivotofsky v. Kerry", d: "Confirmed the President's exclusive power to recognize foreign sovereigns, overriding a conflicting statute."},
+            {t: "Bicameralism", d: "The requirement that a bill must pass both the House and Senate in identical form before becoming law."},
+            {t: "Formalism", d: "A legal theory that the branches must strictly follow the specific procedures listed in the Constitution."},
+            {t: "Functionalism", d: "A legal theory that the branches can share power as long as the core balance is not fundamentally upset."}
+        ],
+        sort: [
+            {f: "Vetoing a Bill", b: "Executive"}, {f: "Declaring War", b: "Legislative"},
+            {f: "Judicial Review", b: "Judicial"}, {f: "Coining Money", b: "Legislative"},
+            {f: "Commanding the Army", b: "Executive"}, {f: "Granting Pardons", b: "Executive"},
+            {f: "Passing a Budget", b: "Legislative"}, {f: "Interpreting Statutes", b: "Judicial"}
+        ]
+    },
+    "Q2": {
+        match: [
+            {t: "West Virginia v. EPA", d: "The Major Questions Doctrine (MQD): Agencies must have clear authorization for rules of vast economic significance."},
+            {t: "Loper Bright (2024)", d: "Ending Chevron Deference: Courts must now exercise independent judgment rather than deferring to agency interpretations."},
+            {t: "Jarkesy v. SEC (2024)", d: "7th Amendment requires fraud cases seeking civil penalties to be heard by a jury in court, not by agency judges."},
+            {t: "Whitman v. Trucking", d: "Justice Scalia: 'Congress does not hide elephants in mouse holes'—meaning major powers aren't in vague text."},
+            {t: "Biden v. Nebraska", d: "Struck down student debt relief; found the HEROES Act did not authorize a massive, $430 billion spending program."},
+            {t: "Axon v. FTC", d: "Allows parties to challenge an agency's constitutionality in federal court before the agency finishes its internal trial."},
+            {t: "Trump v. VOS (2026)", d: "Ruling: IEEPA does not grant the President the power to tax or impose tariffs without explicit, clear law from Congress."},
+            {t: "Bondi v. VanDerStok", d: "Upheld ATF 'Ghost Gun' rule (2025); the Court found the statutory definition of 'firearm' was broad enough to cover kits."},
+            {t: "NFIB v. OSHA", d: "Blocked the vaccine-or-test mandate; ruled that a workplace safety law doesn't authorize a broad public health mandate."},
+            {t: "King v. Burwell", d: "The Court looked at the 'context and purpose' of the ACA to uphold subsidies, choosing to preserve the law's functionality."},
+            {t: "Mass. v. EPA", d: "Initial 2007 ruling that the Clean Air Act requires the EPA to regulate CO2 if it is found to endanger public health."},
+            {t: "FDA v. Brown & W.", d: "Held the FDA could not regulate tobacco because Congress had explicitly acted as if the FDA did not have that power."},
+            {t: "Utility Air v. EPA", d: "Agencies cannot 'bring about an enormous and transformative expansion' of their power through vague statutory language."},
+            {t: "MCI v. AT&T", d: "The word 'modify' in a statute does not give an agency the power to fundamentally rewrite the rules for an entire industry."},
+            {t: "Alabama Realtors", d: "Struck down the CDC eviction moratorium; found the agency exceeded its authority under the Public Health Service Act."},
+            {t: "Clean Air Act", d: "The massive statute frequently interpreted by the EPA; currently the primary battleground for Major Questions challenges."},
+            {t: "Tailpipe Rules (2026)", d: "Recent EPA emissions rules under challenge; courts are looking for 'clear authorization' for the electric vehicle shift."},
+            {t: "DEI Orders (2025)", d: "Executive actions removing DEI programs via agency rule; under review for whether they violate existing funding laws."},
+            {t: "Inst. Competence", d: "The legal argument that Congress, not the 'Administrative State,' is the branch best suited to make major societal policy."},
+            {t: "Pub. Health Srv. Act", d: "A 1944 law giving the Executive emergency powers; the Court has recently restricted how broadly agencies can use it."},
+            {t: "Chevron Deference", d: "The 1984 doctrine (overruled in 2024) that required courts to obey an agency's 'reasonable' reading of an ambiguous law."},
+            {t: "7th Amendment", d: "The right to a trial by jury; currently being used to dismantle the 'in-house' adjudication systems of federal agencies."},
+            {t: "APA (1946)", d: "The Administrative Procedure Act; the 'Constitution' for agencies, setting the rules for how they must create and enforce regulations."},
+            {t: "Notice and Comment", d: "A requirement under the APA that agencies must listen to public feedback before a major rule can become legally binding."},
+            {t: "Adjudication", d: "The process where agencies act as both prosecutor and judge; the 'Jarkesy' ruling has severely limited this practice."},
+            {t: "Enabling Statute", d: "The specific law passed by Congress that 'enables' an agency to exist and gives it its specific bucket of powers."},
+            {t: "Originalism", d: "A judicial philosophy that focuses on the original public meaning of the Constitution; often skeptical of modern agency power."},
+            {t: "Delegated Power", d: "Authority given from Article I (Congress) to Article II (Executive) to handle the 'technical details' of modern governance."},
+            {t: "Article III Courts", d: "Life-tenured, independent courts that the Supreme Court says must handle 'private rights' disputes rather than agencies."},
+            {t: "Regulatory Capture", d: "The danger that an agency will become controlled by the very industry it is supposed to be regulating fairly."},
+            {t: "Legislative Intent", d: "The 'North Star' for judges: looking at what Congress actually meant to do when they wrote a law, not just what the agency wants."},
+            {t: "Chevron Step Zero", d: "The question of whether Congress actually intended for the agency to have any interpretive power over a specific topic at all."},
+            {t: "Major Question", d: "A rule that has 'vast economic and political significance,' triggering the requirement for explicit (not vague) Congressional law."},
+            {t: "Interpreting Silence", d: "Loper Bright says that if a law is silent, the court—not the agency—has the power to say what the law is."},
+            {t: "Intelligible Princ.", d: "The standard (Hampton) that says Congress cannot delegate power without providing a clear 'principle' for the agency to follow."},
+            {t: "Arbitrary/Capricious", d: "The legal standard under the APA used to strike down rules that are illogical, poorly researched, or purely political."},
+            {t: "Judicial Independence", d: "The principle that judges should be free from the influence of the executive agencies they are reviewing."},
+            {t: "Checks & Balances", d: "The primary purpose of the MQD: ensuring the Executive doesn't swallow the Legislative power through 'rule-making'."},
+            {t: "Skidmore Deference", d: "A weaker form of deference where courts consider an agency's view only if it is genuinely 'persuasive' based on expertise."},
+            {t: "Non-Delegation", d: "The theoretical limit on Congress giving its core lawmaking power away to unelected bureaucrats; currently seeing a revival."}
+        ],
+        sort: [
+            {f: "Invokes Major Questions Doctrine", b: "Judicial"}, {f: "Issues Tailpipe Emissions rules", b: "Executive"},
+            {f: "Writes Clear Authorization Clause", b: "Legislative"}, {f: "Overrules Chevron Deference", b: "Judicial"}
+        ]
+    },
+    "Q3": {
+        match: [
+            {t: "5th Amendment", d: "The Due Process Clause: mandated fairness and established procedures before the government restricts rights."},
+            {t: "Liam Conejo (2026)", d: "5-year-old Ecuadorian asylum-seeker detained by ICE in Minneapolis; judge ordered release after national outcry."},
+            {t: "Foucha v. Louisiana", d: "Ruled a person cannot be held indefinitely based on 'dangerousness' alone if they are not mentally ill."},
+            {t: "Kansas v. Hendricks", d: "Upholds civil commitment of predators if they are mentally abnormal AND likely to engage in future violence."},
+            {t: "Addington v. Texas", d: "Sets clear standard for civil commitment: State must prove both mental illness AND danger to self/others."},
+            {t: "Bell v. Wolfish", d: "Pretrial detention is constitutional as long as it is regulatory (for safety) and not punitive (punishment)."},
+            {t: "Bail Reform Act 1984", d: "Authorized federal preventive detention for dangerous defendants who pose a risk to the community."},
+            {t: "US Patriot Act s412", d: "Allowed the detention of non-citizens suspected of terrorism for 7 days before filing formal charges."},
+            {t: "ICE DC Arrests (2025)", d: "1,100+ warrantless immigration arrests in Washington D.C.; later restricted by court decision."},
+            {t: "8th Amendment", d: "Prevents excessive bail and fines; ensures pretrial measures don't become cruel or unusual punishment."},
+            {t: "6th Amendment", d: "The Speedy Trial Clause: guarantees a fair, fast trial to prevent defendants from lingering in detention."},
+            {t: "Carlson v. Landon", d: "Ruled bail can be denied to aliens pending deportation if they are deemed dangerous (Cold War era)."},
+            {t: "A.U.M.F.", d: "Used to justify arresting 'suspicious' individuals in wartime without traditional Bill of Rights protections."},
+            {t: "FISA Courts", d: "Special courts that review government requests for surveillance/detention related to national security threats."},
+            {t: "NYC Monitoring (2025)", d: "Electronic GPS tracking pilot for defendants to lower jail overpopulation while maintaining community safety."},
+            {t: "Demore v. Kim", d: "Upholds mandatory detention of permanent residents during deportation proceedings without a bond hearing."},
+            {t: "Florence v. Board", d: "Ruled jail officials may conduct strip searches on all arrestees entering general population, even for minor offenses."},
+            {t: "Federalist 84", d: "Hamilton argues that a Bill of Rights is not only unnecessary but could be dangerous by implying unlisted rights aren't protected."},
+            {t: "US v. Tortora", d: "Affirmed pretrial detention for a Mafia associate; history of violence meant he was too dangerous for the streets."},
+            {t: "Stack v. Boyle", d: "Bail set higher than reasonably calculated to ensure a defendant's presence at trial is 'excessive' under the 8th Am."},
+            {t: "Hamdi v. Rumsfeld", d: "Government cannot indefinitely detain US citizens as 'enemy combatants' without a chance to contest the facts."},
+            {t: "Zadvydas v. Davis", d: "Prevents life imprisonment by administrative rule; government cannot hold someone forever just because they can't be deported."},
+            {t: "Cook County Order (2025)", d: "Judge Evans barred ICE from making warrantless civil arrests in or around courthouses to ensure fair hearings."},
+            {t: "Boumediene v. Bush", d: "The 'Gold Standard' for detention: held that the Suspension Clause applies to territories under US control (Guantanamo)."},
+            {t: "NH Bail System (2026)", d: "Real-time electronic notification system for law enforcement to track bail status of released individuals."},
+            {t: "Kingsley v. Hendrikson", d: "Pretrial detainees only need to show force was 'objectively unreasonable' to prove a Due Process violation."},
+            {t: "Least Restrictive Means", d: "Principle that if government infringes a right, it must use the narrowest possible way to achieve its goal."},
+            {t: "7th Amendment", d: "Guarantees jury trials; used in 'Jarkesy' to stop agencies from using internal judges to hand out major fines."},
+            {t: "Grand Jury Clause", d: "Part of the 5th Amendment; requires a group of citizens to indict before a person is held for a serious crime."},
+            {t: "Search & Seizure", d: "4th Amendment: protects individuals from unreasonable government interference with their person or property."},
+            {t: "Preventive Detention", d: "Holding a person before trial specifically to prevent them from committing more crimes while waiting for court."},
+            {t: "Regulatory vs Punitive", d: "The legal line: detention is okay for management/safety, but illegal if used as punishment before a conviction."},
+            {t: "Objective Unreasonableness", d: "The Kingsley standard for evaluating whether jail officers used too much force on a pretrial detainee."},
+            {t: "Presumption of Innocence", d: "The foundational principle that one is innocent until proven guilty; key to arguing against long pretrial detention."},
+            {t: "Probative vs Prejudicial", d: "Evidence Rule 609: requires past convictions to be truly relevant before they can be used against a defendant."},
+            {t: "Civil Commitment", d: "The legal process of detaining someone in a mental health facility because they are a danger to themselves or others."},
+            {t: "Due Process (14th Am)", d: "Ensures the same fairness/notice requirements apply to state governments, not just the federal government."},
+            {t: "Mandatory Detention", d: "Laws that force agencies to hold certain types of individuals (like criminal aliens) without an individual hearing."},
+            {t: "Magna Carta (1215)", d: "The historical origin of 'Due Process' and the 'law of the land' concept found in the 5th Amendment."},
+            {t: "Habeas Corpus", d: "The 'Great Writ'; a court order demanding that a prisoner be brought to court to determine if their detention is lawful."}
+        ],
+        sort: [
+            {f: "Ordering a Writ of Habeas Corpus", b: "Judicial"}, {f: "Enacting the Bail Reform Act", b: "Legislative"},
+            {f: "Conducting warrantless ICE arrests", b: "Executive"}, {f: "Establishing the FISA Court", b: "Legislative"}
+        ]
+    }
+};
+
+let selectedTopic = "Q1", score = 0, firstTile = null, lock = false, currentItem = null, correctAns = "";
+
+function launch(type) {
+    selectedTopic = document.getElementById('topicSwitch').value;
+    document.getElementById('lobby').style.display = 'none';
+    document.getElementById('arena').style.display = 'block';
+    const stage = document.getElementById('stage');
+    const data = database[selectedTopic];
+
+    if(type === 'match') {
+        stage.innerHTML = `<h3>${selectedTopic} Match (8 Random Pairs)</h3><div class='grid' id='g'></div>`;
+        let pairs = [...data.match].sort(() => 0.5 - Math.random()).slice(0, 8);
+        let cards = [];
+        pairs.forEach((p, i) => { cards.push({t: p.t, id: i}, {t: p.d, id: i}); });
+        cards.sort(() => 0.5 - Math.random()).forEach(c => {
+            const t = document.createElement('div'); t.className = 'tile'; t.innerText = "???";
+            t.onclick = () => {
+                if(lock || t.classList.contains('flipped')) return;
+                t.innerText = c.t; t.classList.add('flipped');
+                if(!firstTile) { firstTile = {t, id: c.id}; }
+                else {
+                    if(firstTile.id === c.id) { t.classList.add('matched'); firstTile.t.classList.add('matched'); firstTile = null; }
+                    else { lock = true; setTimeout(() => { t.innerText = "???"; t.classList.remove('flipped'); firstTile.t.innerText = "???"; firstTile.t.classList.remove('flipped'); firstTile = null; lock = false; }, 1000); }
+                }
+            };
+            document.getElementById('g').appendChild(t);
+        });
+    } else if(type === 'sort') {
+        stage.innerHTML = "<h3>Power Sorter</h3><div class='display-box' id='db'></div><div class='btn-group'><button class='action-btn' onclick='chkS(\"Legislative\")'>Art I</button><button class='action-btn' onclick='chkS(\"Executive\")'>Art II</button><button class='action-btn' onclick='chkS(\"Judicial\")'>Art III</button></div><p id='sc'>Score: 0</p>";
+        score = 0; nxtS();
+    } else if(type === 'mc') {
+        stage.innerHTML = "<h3>The Multichoice</h3><div class='display-box' id='db'></div><div class='mc-container' id='mc-opts'></div><p id='sc' style='margin-top:20px; font-weight:bold;'>Streak: 0</p>";
+        score = 0; nxtMC();
+    }
+}
+
+function nxtS() { 
+    const list = database[selectedTopic].sort;
+    currentItem = list[Math.floor(Math.random()*list.length)]; 
+    document.getElementById('db').innerText = currentItem.f; 
+}
+function chkS(a) { if(a === currentItem.b) { score++; document.getElementById('sc').innerText = "Score: " + score; nxtS(); } else { alert("Correct Answer: " + currentItem.b); score = 0; document.getElementById('sc').innerText = "Score: 0"; nxtS(); } }
+
+function nxtMC() {
+    const list = database[selectedTopic].match;
+    const target = list[Math.floor(Math.random()*list.length)];
+    correctAns = target.d;
+    document.getElementById('db').innerText = target.t;
+    
+    let options = [target.d];
+    while(options.length < 4) {
+        let r = list[Math.floor(Math.random()*list.length)].d;
+        if(!options.includes(r)) options.push(r);
+    }
+    options.sort(() => 0.5 - Math.random());
+    
+    const optBox = document.getElementById('mc-opts');
+    optBox.innerHTML = "";
+    options.forEach(o => {
+        const btn = document.createElement('button');
+        btn.className = 'mc-btn';
+        btn.innerText = o;
+        btn.onclick = () => chkMC(o);
+        optBox.appendChild(btn);
+    });
+}
+
+function chkMC(choice) {
+    if(choice === correctAns) {
+        score++;
+        document.getElementById('sc').innerText = "Streak: " + score;
+        nxtMC();
+    } else {
+        alert("Incorrect! The correct definition was: " + correctAns);
+        score = 0;
+        document.getElementById('sc').innerText = "Streak: 0";
+        nxtMC();
+    }
+}
+
+function exitGame() { document.getElementById('lobby').style.display = 'grid'; document.getElementById('arena').style.display = 'none'; firstTile = null; }
+</script>
+</body>
+</html>
