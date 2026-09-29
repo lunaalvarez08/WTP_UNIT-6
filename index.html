@@ -1,1 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>We The People Unit 4</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ... Your existing Gatekeeper Styles ... */
+    #gatekeeper {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #0A285F; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; z-index: 99999;
+      font-family: 'Inter', sans-serif;
+    }
+    .lock-box { text-align: center; background: rgba(255, 255, 255, 0.05); padding: 40px; border-radius: 24px; border: 1px solid rgba(212, 175, 55, 0.3); }
+    .lock-box input { display: block; width: 200px; padding: 12px; margin: 20px 0; border-radius: 8px; border: none; text-align: center; font-weight: bold; letter-spacing: 2px; }
+    .lock-box button { background: #D4AF37; color: #0A285F; border: none; padding: 10px 30px; border-radius: 8px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+    #fail-text { color: #ff7675; margin-top: 15px; font-size: 0.8rem; font-weight: bold; display: none; }
+    #protected-wrapper { visibility: hidden; }
 
+    /* --- THE LOGO & CENTERING FIXES --- */
+    .hub-logo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .hub-logo {
+      width: 150px; /* Adjust size if needed */
+      height: auto;
+      border-radius: 50%;
+      border: 3px solid #D4AF37;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    /* Force the Hero buttons to center perfectly */
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="gatekeeper">
+    <div class="lock-box">
+      <div style="font-size: 4rem; margin-bottom: 10px;">🛡️</div>
+      <h2 style="color: white; margin: 0;">Unit 4 Private Hub</h2>
+      <p style="color: #D4AF37; font-size: 0.8rem; margin-top: 5px;">AUTHORIZATION REQUIRED</p>
+      <input type="password" id="passInput" placeholder="••••" onkeydown="if(event.key==='Enter') checkPass()">
+      <button onclick="checkPass()">UNLOCK</button>
+      <p id="fail-text">ACCESS DENIED</p>
+    </div>
+  </div>
+
+  <div id="protected-wrapper">
+    <header>
+      <div class="logo">We The People</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="team.html">Team Members</a>
+        <a href="practice.html">Practice Sets</a>
+        <a href="evidence.html">Evidence Charts</a>
+        <a href="flashcards.html">Flashcards</a>
+        <a href="quizzes.html">Quizzes</a>
+        <a href="about.html">About</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        
+        <div class="hub-logo-container">
+<img src="https://www.civiced.org/images/logo_wethepeople.png" class="hub-logo">        </div>
+
+        <h1>We The People Unit 4 Practice Hub</h1>
+        <p class="competition-text">National Competition • April 16, 2026</p>
+        <p id="competition-timer"></p> 
+        <p id="quote"></p> 
+      </div>
+
+      <div class="buttons">
+        <button onclick="window.location.href='practice.html'">📚 Practice Sets</button>
+        <button onclick="window.location.href='team.html'">👥 Team Members</button>
+        <button onclick="window.location.href='evidence.html'">🗂 Evidence Charts</button>
+        <button onclick="window.location.href='flashcards.html'">📝 Flashcards</button>
+        <button onclick="window.location.href='quizzes.html'">🎯 Quizzes</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const P = "U4";
+    function checkPass() {
+      const input = document.getElementById('passInput').value;
+      if (input === P) {
+        sessionStorage.setItem('unlocked', 'true');
+        unlockSite();
+      } else {
+        document.getElementById('fail-text').style.display = 'block';
+        document.getElementById('passInput').value = "";
+      }
+    }
+    function unlockSite() {
+      document.getElementById('gatekeeper').style.display = 'none';
+      document.getElementById('protected-wrapper').style.visibility = 'visible';
+    }
+    if (sessionStorage.getItem('unlocked') === 'true') { unlockSite(); }
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
