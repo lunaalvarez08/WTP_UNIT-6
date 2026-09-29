@@ -1,1 +1,1415 @@
+/* ================= GENERAL BODY STYLING ================= */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
 
+/* ================= NAV BAR ================= */
+header {
+  background-color: #0A285F; /* navy */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+}
+
+header .logo {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+header nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 500;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+/* ================= PAGE TITLE ================= */
+h1 {
+  color: #0A285F; /* navy */
+  margin-bottom: 20px;
+}
+
+/* ================= SECTIONS ================= */
+section {
+  margin: 20px 0;
+}
+
+/* ================= BUTTONS ================= */
+button {
+  margin: 5px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  background-color: #B22234; /* red */
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+button:hover {
+  background-color: #a31d2b;
+  transform: scale(1.05);
+}
+
+/* ================= TEAM SELECTORS ================= */
+.team-selector {
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+.team-selector select {
+  padding: 6px 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 2px solid #0A285F;
+}
+
+/* ================= QUESTION SELECTOR ================= */
+.question-selector {
+  margin: 20px 0;
+}
+
+.question-selector button.active {
+  background-color: #4caf50; /* green highlight */
+  color: white;
+}
+
+/* ================= EVIDENCE TABLE ================= */
+.evidence-table {
+  max-width: 900px;
+  margin: 20px auto 60px;
+}
+
+.evidence-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  table-layout: fixed; /* evenly spaced columns */
+}
+
+.evidence-table th {
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+  color: #0A285F;
+  padding: 8px;
+  text-align: left;
+}
+
+.evidence-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  vertical-align: top;
+}
+
+/* Textareas styled like Google Docs cells */
+.evidence-table textarea.auto-textarea {
+  width: 100%;
+  min-height: 50px;
+  max-height: 300px;
+  padding: 4px;
+  border: none;
+  resize: none;
+  overflow-y: hidden;
+  font-family: inherit;
+  font-size: 14px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+/* Select boxes styled like table cells */
+.evidence-table select {
+  width: 100%;
+  font-size: 14px;
+  padding: 4px;
+  border: none;
+  background-color: #f8f8f8;
+  box-sizing: border-box;
+}
+
+/* Row hover effect */
+.evidence-table tbody tr:hover {
+  background-color: #f0f8ff;
+}
+
+/* Delete buttons inside table */
+.evidence-table td button {
+  background-color: #B22234;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.evidence-table td button:hover {
+  background-color: #a31d2b;
+  transform: scale(1.05);
+}
+
+/* Add Row button */
+#add-row {
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: none;
+  background-color: #B22234;
+  color: white;
+  cursor: pointer;
+}
+
+#add-row:hover {
+  background-color: #a31d2b;
+  transform: scale(1.05);
+}
+
+.practice-sets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.practice-sets .card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.practice-sets .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.practice-sets .card h3 {
+  margin-bottom: 10px;
+}
+
+.practice-sets .card p {
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+
+.practice-sets .card button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.practice-sets .card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  cursor: pointer;
+}
+
+.practice-sets .card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  background: #eef2ff; /* subtle color change on hover */
+}
+
+.practice-sets .card button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.practice-sets .card button:hover {
+  transform: scale(1.05);
+  background-color: #0c3478; /* slightly darker navy */
+}
+.practice-sets .card:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15), 0 0 10px rgba(10,40,95,0.3);
+}
+.quiz-sets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.quiz-sets .card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  cursor: pointer;
+}
+
+.quiz-sets .card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  background: #eef2ff;
+}
+
+.quiz-sets .card h3 {
+  margin-bottom: 10px;
+}
+
+.quiz-sets .card p {
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+
+.quiz-sets .card button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.quiz-sets .card button:hover {
+  transform: scale(1.05);
+  background-color: #0c3478;
+}
+#options button {
+  margin: 8px 0;
+  width: 100%;
+  transition: transform 0.15s, background 0.25s;
+}
+
+#options button:hover {
+  transform: scale(1.05);
+  background-color: #0c3478; /* slightly darker navy on hover */
+  color: #fff;
+}
+
+.correct {
+  background-color: #28a745 !important; /* green */
+  color: white !important;
+}
+
+.incorrect {
+  background-color: #dc3545 !important; /* red */
+  color: white !important;
+}
+#score-card h3 {
+  color: #0A285F; /* navy */
+  margin-bottom: 10px;
+}
+
+#score-card p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.flashcard-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.flashcard {
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  padding: 20px;
+  top: 0;
+  left: 0;
+}
+
+.card-front {
+  background-color: #eef2ff;
+  color: #0A285F;
+}
+
+.card-back {
+  background-color: #0A285F;
+  color: white;
+  transform: rotateY(180deg);
+}
+.flashcard-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px;
+}
+
+.flashcard {
+  width: 260px;
+  height: 180px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  padding: 20px;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.card-front {
+  background-color: #eef2ff;
+  color: #0A285F;
+}
+
+.card-back {
+  background-color: #0A285F;
+  color: white;
+  transform: rotateY(180deg);
+}
+#progress {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #555;
+}
+
+.btn-red {
+  background-color: #c62828;
+  color: white;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+#progress-bar-container {
+  width: 100%;
+  height: 15px;
+  background-color: #ddd;
+  border-radius: 10px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: #0a285f; /* navy */
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 10px;
+  transition: width 0.5s ease, background-color 0.5s ease;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin: 20px;
+}
+
+.team-card {
+  background-color: #fff;
+  border: 2px solid #0a285f;
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+}
+
+.member-emoji {
+  font-size: 50px;
+}
+
+.member-name {
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.member-stats {
+  margin: 10px 0;
+  font-size: 0.9rem;
+}
+
+.member-buttons button {
+  margin: 5px;
+}
+
+.member-content {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.team-card {
+  perspective: 1000px; /* needed for 3D flip */
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.team-card .card-front,
+.team-card .card-back {
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+  top: 0;
+  left: 0;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.btn-back {
+  margin-top: 10px;
+}
+
+.team-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.team-card {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  cursor: pointer;
+  border: 2px solid #0A285F;
+  border-radius: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.team-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.member-panel {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 800px;
+  background: white;
+  border: 2px solid #0A285F;
+  border-radius: 12px;
+  padding: 20px;
+  z-index: 100;
+}
+
+.member-panel.hidden {
+  display: none;
+}
+
+.member-tabs {
+  margin-top: 10px;
+}
+
+.member-tabs .tab-btn {
+  margin-right: 10px;
+}
+
+.member-tabs .tab-btn.active {
+  background-color: #0A285F;
+  color: white;
+}
+
+/* ===== TEAM GRID & CARDS ===== */
+#team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.team-card {
+  width: 140px;
+  height: 140px;
+  background-color: #eef2ff; /* light blue so it shows */
+  border: 2px solid #0A285F;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.team-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.member-emoji {
+  font-size: 50px;
+}
+
+.member-name {
+  font-weight: bold;
+  margin-top: 5px;
+  color: #0A285F;
+  font-size: 1.1rem;
+}
+
+/* ===== MEMBER PANEL ===== */
+.member-panel {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 800px;
+  background: #fff;
+  border: 2px solid #0A285F;
+  border-radius: 12px;
+  padding: 20px;
+  z-index: 100;
+  display: none; /* hidden by default */
+}
+
+.member-panel.show {
+  display: block;
+}
+
+.member-tabs {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.member-tabs .tab-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: #B22234;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.member-tabs .tab-btn.active {
+  background-color: #0A285F;
+}
+/* ===== TEAM GRID ===== */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  max-width: 700px;
+  margin: 40px auto;
+}
+
+/* ===== TEAM CARD ===== */
+.team-card {
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 30px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background-color: white;
+}
+
+.team-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* ===== EMOJI CIRCLE ===== */
+.emoji-circle {
+  width: 80px;
+  height: 80px;
+  background-color: #0A285F;
+  color: white;
+  border-radius: 50%;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+}
+
+/* ===== NAME ===== */
+.member-name {
+  font-size: 20px;
+  font-weight: 600;
+}
+/* HOME PAGE WELCOME SECTION */
+#welcome-section {
+  background-color: #FFFFFF;
+  color: #1E3A8A;
+  text-align: center;
+  padding: 60px 20px;
+  font-family: 'Times New Roman', serif;
+}
+
+.circle-logo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+#welcome-section h1 {
+  font-size: 2.5em;
+  margin: 10px 0;
+}
+
+#welcome-section h2 {
+  font-size: 1.5em;
+  color: #DC2626;
+  margin: 10px 0 30px 0;
+}
+
+/* Countdown Timer */
+#countdown {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+/* Dynamic Content */
+.dynamic-content p {
+  font-size: 1em;
+  margin: 10px 0;
+  font-style: italic;
+}
+
+/* Practice Buttons */
+#practice-buttons {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.button-container button {
+  background-color: #DC2626;
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-container button:hover {
+  background-color: #DC2626;
+}
+
+/* Make buttons responsive */
+@media (max-width: 600px) {
+  .button-container button {
+    width: 100%;
+    margin: 5px 0;
+  }
+}
+#welcome-section {
+  background-color: #ffffff;
+  color: #1E3A8A;
+  text-align: center;
+  padding: 60px 20px;
+  font-family: "Times New Roman", serif;
+}
+
+.circle-logo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+#welcome-section h1 {
+  font-size: 2.5em;
+}
+
+#welcome-section h2 {
+  color: #DC2626;
+  margin-bottom: 25px;
+}
+
+#countdown {
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+
+.dynamic-content p {
+  font-style: italic;
+  margin: 8px 0;
+}
+
+.buttons-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  padding: 30px;
+  max-width: 700px;
+  margin: auto;
+}
+
+button {
+  background-color: #1E3A8A;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #DC2626;
+}
+.hero {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 700px;
+}
+
+.hero h1 {
+  font-family: "Times New Roman", serif;
+  font-size: 2.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtext {
+  font-style: italic;
+  color: #555;
+  margin-bottom: 2.5rem;
+}
+
+.countdown, .daily-box {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+#timer {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  color: #8b0000;
+}
+
+.daily-box p {
+  font-size: 1.1rem;
+  margin-top: 0.6rem;
+}
+.hero-content, .welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* centers horizontally */
+  text-align: center;    /* centers the text inside */
+  justify-content: center; /* optional: centers vertically if needed */
+  margin: 0 auto;        /* ensures container itself is centered */
+}
+.hero {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center; /* centers the container horizontally */
+  align-items: center;     /* centers the container vertically */
+  text-align: center;      /* centers text inside */
+  padding: 3rem 1.5rem;
+}
+
+.hero-content {
+  max-width: 700px;        /* keeps text from stretching too wide */
+  width: 100%;
+}
+
+h1, .subtext {
+  margin: 0.5rem 0;
+}
+
+.countdown, .daily-box {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: #f9f9f9;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+/* HERO SECTION */
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.hero-content h1 {
+  font-family: "Times New Roman", serif;
+  margin-bottom: 0.5rem;
+}
+
+.subtext {
+  color: #1e3a8a; /* blue text */
+  margin-bottom: 0.5rem;
+}
+
+.countdown-text {
+  color: #1e3a8a;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.quote-text {
+  font-style: italic;
+  color: #1e3a8a;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto 2rem auto;
+}
+
+/* BUTTONS */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.button-container button {
+  font-family: "Times New Roman", serif;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background-color: #1e3a8a;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+.button-container button:hover {
+  background-color: #3749a8;
+}
+
+/* NAVBAR */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #f5f5f5;
+}
+
+header .logo {
+  font-family: "Times New Roman", serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+header nav a {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: #1e3a8a;
+  font-family: "Times New Roman", serif;
+}
+/* GENERAL STYLING */
+body {
+  font-family: 'Times New Roman', serif;
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+/* HERO SECTION */
+.hero {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center; /* centers horizontally */
+  align-items: flex-start; /* aligns towards top */
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.hero-content {
+  max-width: 800px;
+  width: 100%;
+}
+
+/* MAIN TITLE */
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+/* NATIONAL COMPETITION */
+.competition-text {
+  color: red;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* QUOTE OF THE DAY */
+.daily-quote p {
+  font-style: italic;
+  color: #1E90FF; /* chic blue */
+  font-size: 1.1rem;
+  margin-bottom: 2rem; /* space before buttons */
+}
+
+/* BUTTONS */
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.buttons button {
+  font-family: 'Times New Roman', serif;
+  font-size: 1rem;
+  padding: 0.8rem 1.2rem;
+  border: 2px solid #1E90FF;
+  background-color: white;
+  color: #1E90FF;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.buttons button:hover {
+  background-color: #1E90FF;
+  color: white;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+}
+/* NAV BAR */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  background: white;
+}
+
+header .logo {
+  font-family: "Times New Roman", serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+header nav a {
+  margin-left: 1rem;
+  text-decoration: none;
+  font-family: "Times New Roman", serif;
+  color: black;
+}
+
+header nav a:hover {
+  color: #1E90FF;
+}
+
+/* HERO SECTION */
+.hero {
+  text-align: center;
+  padding: 4rem 1rem 2rem 1rem;
+}
+
+.hero-content h1 {
+  font-family: "Times New Roman", serif;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.competition-text {
+  font-weight: bold;
+  color: red;
+  margin-bottom: 0.5rem;
+}
+
+/* COUNTDOWN TIMER */
+.countdown-timer {
+  color: #1E90FF;
+  font-size: 1rem;
+  margin: 0.5rem 0 1.5rem 0;
+  font-weight: normal;
+}
+
+/* QUOTE */
+.daily-quote p {
+  font-style: italic;
+  color: #1E90FF;
+  margin-bottom: 2rem;
+}
+
+/* BUTTONS */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.buttons button {
+  font-family: "Times New Roman", serif;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid red;
+  background: white;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.buttons button:hover {
+  background-color: red;
+  color: white;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 600px) {
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+/* NAV BAR */
+header {
+  background-color: #1E3A8A; /* navy blue */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header .logo {
+  font-weight: bold;
+  color: white;
+  font-size: 1.5rem;
+}
+
+header nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 1.5rem;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+header nav a:hover {
+  color: #FFD700; /* gold on hover */
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header nav {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header nav a {
+    margin: 0.3rem 0;
+  }
+}
+#competition-timer {
+  color: #1E90FF; /* blue */
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+// Quote of the Day
+const quotes = [
+  "Knowledge will forever govern ignorance. — James Madison",
+  "The Constitution is not a mere lawyers’ document. — Justice Louis Brandeis",
+  "Democracy cannot succeed unless those who express their choice are prepared to choose wisely. — Franklin D. Roosevelt",
+  "Liberty lies in the rights of that person whose views you find most odious. — H. L. Mencken",
+  "The price of freedom is eternal vigilance. — Thomas Jefferson",
+  "Justice delayed is justice denied. — William E. Gladstone",
+  "Freedom is never voluntarily given by the oppressor; it must be demanded by the oppressed. — Martin Luther King Jr.",
+  "In matters of conscience, the law of the majority has no place. — Mahatma Gandhi",
+  "If men were angels, no government would be necessary. — James Madison",
+  "The safeguard of liberty is education. — Woodrow Wilson"
+];
+
+const quoteEl = document.getElementById("quote");
+quoteEl.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+// Countdown Timer
+const competitionDate = new Date("April 16, 2026 09:00:00").getTime();
+
+function updateTimer() {
+  const now = new Date().getTime();
+  const distance = competitionDate - now;
+
+  if (distance < 0) {
+    document.getElementById("competition-timer").textContent = "Competition is live!";
+    clearInterval(timerInterval);
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  document.getElementById("competition-timer").textContent =
+    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+
+.buttons {
+  text-align: center; /* centers inline/block children */
+}
+:root {
+    --navy: #0A285F;
+    --red: #B22234;
+    --gold: #D4AF37;
+    --light-gray: #f8f9fa;
+    --white: #ffffff;
+}
+
+body {
+    font-family: 'Inter', -apple-system, sans-serif; /* Modern, crisp font */
+    line-height: 1.6;
+    color: #2d3436;
+    margin: 0;
+    background-color: var(--white);
+}
+
+/* Minimal Nav: No background, just clean text */
+.navbar {
+    padding: 2rem 5%;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #eee;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 3rem;
+    margin: 0;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--navy);
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--red);
+}
+
+/* Hero Section: Typography focused */
+.hero {
+    padding: 8rem 2rem;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    letter-spacing: -1px;
+    color: var(--navy);
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    color: #636e72;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Refined Cards */
+.member-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 0 5% 5rem;
+}
+
+.member-card {
+    padding: 3rem 1rem;
+    background: var(--light-gray);
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.member-card:hover {
+    transform: translateY(-5px);
+    background: #f1f2f6;
+}
+
+.member-card h3 {
+    font-weight: 400;
+    color: var(--navy);
+    margin-bottom: 1.5rem;
+}
+
+/* Subtle Gold Button Style */
+.btn-minimal {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 4px;
+}
+/* --- NEW BRANDING & ALIGNMENT FIXES --- */
+
+/* Centers the Logo */
+.hub-logo-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.hub-logo {
+    width: 150px; 
+    height: auto;
+    border-radius: 50%;
+    border: 3px solid #D4AF37; /* Gold border to match logo */
+    box-shadow: 0 10px 30px rgba(10, 40, 95, 0.2);
+}
+
+/* Forces Buttons to Center */
+.bottom-controls {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+    width: 100%;
+    clear: both; /* Ensures no floating elements interfere */
+}
+
+.back-btn {
+    background: #B22234; /* Your Red */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 800;
+}
