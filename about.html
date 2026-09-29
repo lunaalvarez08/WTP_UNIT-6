@@ -1,1 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q1 Ghost Recall</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; padding: 20px; }
+        .recall-container { max-width: 900px; margin: auto; background: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: #0A285F; color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #D4AF37; }
+        .controls select { padding: 8px; border-radius: 5px; font-weight: bold; }
+        #scriptDisplay { padding: 40px; line-height: 2.2; font-size: 1.25rem; min-height: 500px; }
+        .blurred { background: #cbd5e1; color: transparent; border-radius: 4px; transition: 0.3s; cursor: help; padding: 0 3px; border-bottom: 2px solid #94a3b8; }
+        .blurred:hover { color: #0A285F; background: transparent; }
+        .cue { color: #94a3b8; font-style: italic; opacity: 0.7; }
+        .back-btn { color: white; text-decoration: none; font-size: 0.9rem; border: 1px solid white; padding: 5px 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
 
+<div class="recall-container">
+    <div class="header">
+        <div>
+            <a href="index.html" class="back-btn">← Back to Home</a>
+            <h2 style="margin: 10px 0 0 0;">Unit 4: Q1 Ghost Recall</h2>
+        </div>
+        <div class="controls">
+            <label>Practice as:</label>
+            <select id="ghostMemberSelect" onchange="renderGhostScript()">
+                <option value="Sarah">Sarah</option>
+                <option value="Evan">Evan</option>
+                <option value="Luna">Luna</option>
+                <option value="Bekim">Bekim</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="scriptDisplay"></div>
+</div>
+
+<script>
+    const fullScript = `Congress delegates aspects of its constitutional authority to the executive and judicial branches in ways that shift political responsibility and reduce its own accountability(Sarah). They accomplish this by delegating the blame of certain actions to executive officials, particularly in areas requiring specialized expertise, such as rulemaking and internal reorganization(Evan). Delegation on a constitutional scale can be seen in Article I, Section 8, Clause 11, which grants Congress the power to declare war, while the President, as commander in chief, deploys troops(Luna). Post World War II, Congress has frequently relied on broad authorizations instead of a formal declaration war. This approach shifted operational authority and public accountability toward the executive branch, particularly as public opposition to prolonged conflicts intensified(Bekim). Congress has also delegated its power vested in Article I, Section 8, Clause 1 to regulate tariffs to the executive branch(Evan). In Hampton Jr. & Co. v. U.S., the Supreme Court upheld Congress’s decision to allow the president to adjust tariff rates. This case established the “intelligible principle” test, which allows Congress to delegate authority as long as it provides clear standards to guide executive action(Sarah). This allows Congress to outline general economic objectives while shifting responsibility for potentially controversial tariff decisions to the president(Evan). Since the Flexible Tariff Act provided a clear objective rather than unchecked authority, the Supreme Court concluded that it did not violate the separation of powers(Luna). Beyond the executive branch, Congress has also shifted responsibility to the judiciary. Through laws like the 1934 Rules Enabling Act, Congress allowed federal courts to create their own procedural rules(Bekim). Additionally, Congress often passes vague statutes or avoids addressing politically sensitive issues directly, which forces courts to interpret and apply the law. In doing so, Congress transfers part of its constitutional authority from elected officials to an unelected and politically insulated judiciary(Sarah). Judge Thapar is correct in saying that excessive congressional delegation deprives the people of influence and accountability that the framers intended them to have(Bekim). In Federalist 52, Madison wrote that the House “is to be elected immediately by the people,” demonstrating that framers wished for Congress to be representative of the will of the people, solidifying nondelegation as an axiom, rather than being up to the discretion of representatives(Luna). Article 1, section 1 of the Constitution states, “All legislative Powers herein granted shall be vested in a Congress of the United States,” proving that legislative powers granted to Congress belong to Congress and, by extension, the people(Evan). According to Fed 78, the judicial branch was intended to be free from public influence by being composed of unelected officials(Sarah). The Executive branch is comprised of the bureaucratic agencies made up of members who do not have to conform to public opinion(Luna). By delegating power to different branches of government, constituents lose power as elected officials who work closer to the people are unable to act upon requests made(Bekim). Congress has surrendered far too much of their own power to other branches of government. The framers of the constitution envisioned that power was carefully balanced among the three branches to safeguard against overreach(Evan). However, many framers believed Congress would be the most powerful branch. This idea was supported in Federalist 48, which states Congress is the most dominant branch due to its close relation with the people(Sarah). In terms of constitutionally granted powers and abilities, Congress holds the most fundamental authority within the system of checks and balances, as it exercises more oversight over other branches and levels of government than any other institution(Bekim). Article 1 of the Constitution grants various executive checks, including the ability to override a president’s veto or control budgets(Luna). However, many believe that Congress has become increasingly inactive in fulfilling these responsibilities(Sarah). According to Gallup News, 80% of the public said they disapprove of the way Congress is handling its job. To improve its effectiveness, Congress should focus on issues that directly affect citizens, such as the rising cost of living as seen D.C’s housing cost being 144% higher than the national average(Evan). Congress can also strengthen its oversight responsibilities by closely monitoring executive agencies, placing limits on executive orders, or reclaiming portions of lawmaking authority that have transferred to the executive branch(Luna). By fully exercising its constitutional powers, Congress could enhance its effectiveness and rebuild public trust in its role within the federal government(Bekim). Thank you for listening to our testimony. We are now ready for your questions(Bekim).`;
+
+    function renderGhostScript() {
+        const user = document.getElementById('ghostMemberSelect').value;
+        const stage = document.getElementById('scriptDisplay');
+        const sentences = fullScript.split(/(?<=\))/); 
+        
+        stage.innerHTML = sentences.map(s => {
+            if(!s.trim()) return "";
+            const isMyLine = s.includes("(" + user + ")");
+            const cleanText = s.replace(/\(\w+\)/g, "");
+            
+            return isMyLine 
+                ? `<span class="blurred">${cleanText}</span>` 
+                : `<span class="cue">${cleanText}</span>`;
+        }).join(" ");
+    }
+
+    window.onload = renderGhostScript;
+</script>
+
+</body>
+</html>
