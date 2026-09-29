@@ -2,10 +2,10 @@ alert("Flashcards Script Loaded");
 
 // ===== Team Data =====
 const teamMembers = [
-  { name: "Luna", emoji: "🦭", flashcards: [] },
-  { name: "Sarah", emoji: "🦋", flashcards: [] },
-  { name: "Bekim", emoji: "⭐", flashcards: [] },
-  { name: "Evan", emoji: "🏈", flashcards: [] }
+  { name: "Josue", emoji: "⭐", flashcards: [] },
+  { name: "Naomi", emoji: "⭐", flashcards: [] },
+  { name: "Brooks", emoji: "⭐", flashcards: [] },
+  { name: "Emmalie", emoji: "⭐", flashcards: [] }
 ];
 
 // ===== References =====
