@@ -1,1 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <script>
+        if (sessionStorage.getItem('unlocked') !== 'true') {
+            window.location.href = "index.html";
+        }
+    </script>
 
+    <title>Evidence Charts - Unit 4</title>
+    <style>
+        /* Base styles matching your Home Page aesthetic */
+        body { margin: 0; font-family: 'Times New Roman', serif; background-color: #FFFFFF; color: #333; }
+        
+        /* Your NAV BAR Styles */
+        header { 
+            background-color: #0A285F; 
+            padding: 15px 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .logo { color: white; font-weight: bold; font-size: 1.5rem; }
+        nav a { color: white; text-decoration: none; margin-left: 20px; font-size: 0.9rem; font-family: sans-serif; }
+        nav a:hover { color: #D4AF37; }
+
+        /* Dashboard Styles */
+        .content-container { padding: 40px 5%; }
+        .controls-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px; }
+        
+        .q-btn { padding: 10px 20px; border: 1px solid #ddd; background: #f9f9f9; cursor: pointer; font-weight: bold; color: #666; border-radius: 4px; transition: 0.3s; }
+        .q-btn.active { background: #0A285F; color: white; border-color: #0A285F; }
+        
+        select { padding: 10px; border: 2px solid #D4AF37; border-radius: 4px; color: #0A285F; font-weight: bold; cursor: pointer; }
+        
+        .add-row-btn { background: #D4AF37; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 10px; float: right; }
+
+        /* Table Styles */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        th { background-color: #0A285F; color: white; padding: 15px; border: 1px solid #0A285F; text-align: left; }
+        td { border: 1px solid #ddd; padding: 0; }
+        textarea { width: 100%; border: none; padding: 15px; min-height: 80px; box-sizing: border-box; resize: vertical; font-family: inherit; font-size: 1rem; }
+        
+        .delete-btn { color: #B22234; background: none; border: none; font-size: 24px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">We The People</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="team.html">Team Members</a>
+            <a href="practice.html">Practice Sets</a>
+            <a href="evidence.html">Evidence Charts</a>
+            <a href="flashcards.html">Flashcards</a>
+            <a href="quizzes.html">Quizzes</a>
+            <a href="about.html">About</a>
+        </nav>
+    </header>
+
+    <div class="content-container">
+        <div class="controls-header">
+            <div>
+                <h1 style="color: #0A285F; margin: 0; font-size: 2.2rem;">Evidence Charts</h1>
+                <p style="color: #666; margin-top: 5px;">Manage evidence and historical connections.</p>
+                
+                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                    <button class="q-btn active" onclick="updateQ('Q1', this)">Question 1</button>
+                    <button class="q-btn" onclick="updateQ('Q2', this)">Question 2</button>
+                    <button class="q-btn" onclick="updateQ('Q3', this)">Question 3</button>
+                </div>
+            </div>
+
+            <div style="text-align: right;">
+                <label style="display: block; font-size: 0.75rem; font-weight: bold; color: #0A285F; margin-bottom: 5px; text-transform: uppercase;">Team Member</label>
+                <select id="memberSelect" onchange="loadSet()">
+                    <option value="Luna">Luna</option>
+                    <option value="Sarah">Sarah</option>
+                    <option value="Bekim">Bekim</option>
+                    <option value="Evan">Evan</option>
+                </select>
+                <br>
+                <button class="add-row-btn" onclick="addRow()">+ New Row</button>
+            </div>
+        </div>
+
+        <h3 id="setLabel" style="color: #0A285F; font-weight: normal; border-bottom: 1px solid #eee; padding-bottom: 10px;">Luna's Q1 Set</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Evidence</th>
+                    <th style="width: 30%;">Background</th>
+                    <th style="width: 35%;">How it relates to <span id="colQ">Q1</span></th>
+                    <th style="width: 5%; background: white; border: none;"></th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        let currentQ = 'Q1';
+        const tableBody = document.getElementById('tableBody');
+
+        function updateQ(q, btn) {
+            currentQ = q;
+            document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('colQ').innerText = q;
+            loadSet();
+        }
+
+        function loadSet() {
+            const member = document.getElementById('memberSelect').value;
+            document.getElementById('setLabel').innerText = `${member}'s ${currentQ} Set`;
+            
+            const storageKey = `wtp_evidence_${member}_${currentQ}`;
+            const savedData = JSON.parse(localStorage.getItem(storageKey)) || [];
+            
+            tableBody.innerHTML = '';
+            if (savedData.length === 0) {
+                for(let i=0; i<10; i++) addRow(); // Requirement: Default 10 rows 
+            } else {
+                savedData.forEach(item => addRow(item.c1, item.c2, item.c3));
+            }
+        }
+
+        function addRow(v1='', v2='', v3='') {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><textarea oninput="saveSet()">${v1}</textarea></td>
+                <td><textarea oninput="saveSet()">${v2}</textarea></td>
+                <td><textarea oninput="saveSet()">${v3}</textarea></td>
+                <td style="text-align:center;"><button class="delete-btn" onclick="this.parentElement.parentElement.remove(); saveSet();">&times;</button></td>
+            `;
+            tableBody.appendChild(tr);
+        }
+
+        function saveSet() {
+            const member = document.getElementById('memberSelect').value;
+            const storageKey = `wtp_evidence_${member}_${currentQ}`;
+            const rows = document.querySelectorAll('#tableBody tr');
+            const data = Array.from(rows).map(r => {
+                const fields = r.querySelectorAll('textarea');
+                return { c1: fields[0].value, c2: fields[1].value, c3: fields[2].value };
+            });
+            localStorage.setItem(storageKey, JSON.stringify(data));
+        }
+
+        window.onload = loadSet;
+    </script>
+</body>
+</html>
