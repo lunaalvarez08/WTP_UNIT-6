@@ -1,1 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
 
+    <script>
+        if (sessionStorage.getItem('unlocked') !== 'true') {
+            window.location.href = "index.html";
+        }
+    </script>
+
+    <title>Flashcards - Unit 4</title>
+    <style>
+        body { margin: 0; font-family: 'Times New Roman', serif; background-color: #FFFFFF; color: #333; }
+        
+        /* Your NAV BAR Styles */
+        header { 
+            background-color: #0A285F; 
+            padding: 15px 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .logo { color: white; font-weight: bold; font-size: 1.5rem; }
+        nav a { color: white; text-decoration: none; margin-left: 20px; font-size: 0.9rem; font-family: sans-serif; }
+        nav a:hover { color: #D4AF37; }
+
+        /* Dashboard Styles */
+        .content-container { padding: 40px 5%; max-width: 1000px; margin: auto; }
+        .controls-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px; }
+        
+        .q-btn { padding: 10px 20px; border: 1px solid #ddd; background: #f9f9f9; cursor: pointer; font-weight: bold; color: #666; border-radius: 4px; transition: 0.3s; }
+        .q-btn.active { background: #0A285F; color: white; border-color: #0A285F; }
+        
+        select { padding: 10px; border: 2px solid #D4AF37; border-radius: 4px; color: #0A285F; font-weight: bold; cursor: pointer; }
+        
+        /* Card Creator Form */
+        .add-card-section { background: #f9f9f9; padding: 20px; border-radius: 8px; border-left: 5px solid #D4AF37; margin-bottom: 40px; }
+        .add-card-section input { padding: 10px; border: 1px solid #ddd; border-radius: 4px; width: 40%; margin-right: 10px; }
+        .save-btn { background: #0A285F; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
+        /* Flashcard Flip Animation */
+        .flashcard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .card-container { perspective: 1000px; height: 200px; cursor: pointer; position: relative; }
+        .card-inner { 
+            position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 8px; border: 1px solid #eee;
+        }
+        .card-container.flipped .card-inner { transform: rotateY(180deg); }
+        .card-front, .card-back { 
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden; 
+            display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; border-radius: 8px; 
+        }
+        .card-front { background: white; color: #0A285F; font-weight: bold; font-size: 1.1rem; }
+        .card-back { background: #0A285F; color: white; transform: rotateY(180deg); font-size: 1rem; }
+
+        .delete-card { position: absolute; top: 10px; right: 10px; background: none; border: none; color: #B22234; font-size: 18px; cursor: pointer; z-index: 10; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">We The People</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="team.html">Team Members</a>
+            <a href="practice.html">Practice Sets</a>
+            <a href="evidence.html">Evidence Charts</a>
+            <a href="flashcards.html">Flashcards</a>
+            <a href="quizzes.html">Quizzes</a>
+            <a href="about.html">About</a>
+        </nav>
+    </header>
+
+    <div class="content-container">
+        <div class="controls-header">
+            <div>
+                <h1 style="color: #0A285F; margin: 0;">Flashcards</h1>
+                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                    <button class="q-btn active" onclick="updateQ('Q1', this)">Question 1</button>
+                    <button class="q-btn" onclick="updateQ('Q2', this)">Question 2</button>
+                    <button class="q-btn" onclick="updateQ('Q3', this)">Question 3</button>
+                </div>
+            </div>
+
+            <div style="text-align: right;">
+                <label style="display: block; font-size: 0.75rem; font-weight: bold; color: #0A285F; margin-bottom: 5px;">MEMBER SET</label>
+                <select id="memberSelect" onchange="loadCards()">
+                    <option value="Luna">Luna</option>
+                    <option value="Sarah">Sarah</option>
+                    <option value="Bekim">Bekim</option>
+                    <option value="Evan">Evan</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="add-card-section">
+            <h4 style="margin-top: 0; color: #0A285F;">+ Add New Flashcard</h4>
+            <input type="text" id="frontInput" placeholder="Front (Term/Question)">
+            <input type="text" id="backInput" placeholder="Back (Definition/Answer)">
+            <button class="save-btn" onclick="addCard()">Save Card</button>
+        </div>
+
+        <h3 id="setLabel" style="color: #0A285F; font-weight: normal; border-bottom: 1px solid #eee; padding-bottom: 10px;">Luna's Q1 Cards</h3>
+        <div id="flashcardGrid" class="flashcard-grid"></div>
+    </div>
+
+    <script>
+        let currentQ = 'Q1';
+        const grid = document.getElementById('flashcardGrid');
+
+        function updateQ(q, btn) {
+            currentQ = q;
+            document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            loadCards();
+        }
+
+        function loadCards() {
+            const member = document.getElementById('memberSelect').value;
+            document.getElementById('setLabel').innerText = `${member}'s ${currentQ} Cards`;
+            
+            const storageKey = `wtp_cards_${member}_${currentQ}`;
+            const cards = JSON.parse(localStorage.getItem(storageKey)) || [];
+            
+            grid.innerHTML = '';
+            cards.forEach((card, index) => {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'card-container';
+                cardDiv.onclick = function() { this.classList.toggle('flipped'); };
+                cardDiv.innerHTML = `
+                    <button class="delete-card" onclick="event.stopPropagation(); deleteCard(${index})">&times;</button>
+                    <div class="card-inner">
+                        <div class="card-front">${card.front}</div>
+                        <div class="card-back">${card.back}</div>
+                    </div>
+                `;
+                grid.appendChild(cardDiv);
+            });
+        }
+
+        function addCard() {
+            const front = document.getElementById('frontInput').value;
+            const back = document.getElementById('backInput').value;
+            const member = document.getElementById('memberSelect').value;
+            
+            if(!front || !back) return alert("Please fill in both sides.");
+
+            const storageKey = `wtp_cards_${member}_${currentQ}`;
+            const cards = JSON.parse(localStorage.getItem(storageKey)) || [];
+            cards.push({ front, back });
+            
+            localStorage.setItem(storageKey, JSON.stringify(cards));
+            document.getElementById('frontInput').value = '';
+            document.getElementById('backInput').value = '';
+            loadCards();
+        }
+
+        function deleteCard(index) {
+            const member = document.getElementById('memberSelect').value;
+            const storageKey = `wtp_cards_${member}_${currentQ}`;
+            let cards = JSON.parse(localStorage.getItem(storageKey));
+            cards.splice(index, 1);
+            localStorage.setItem(storageKey, JSON.stringify(cards));
+            loadCards();
+        }
+
+        window.onload = loadCards;
+    </script>
+</body>
+</html>
