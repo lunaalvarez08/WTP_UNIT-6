@@ -4,39 +4,39 @@ alert("Evidence Script Loaded");
 // ===== Team Data =====
 const teamMembers = [
   {
-    name: "Luna",
-    emoji: "🦭",
-    evidence: [
-      { question: "Q1", text: "Luna's Q1 evidence", type: "primary", why: "Explanation" },
-      { question: "Q2", text: "Luna's Q2 evidence", type: "secondary", why: "Explanation" },
-      { question: "Q3", text: "Luna's Q3 evidence", type: "primary", why: "Explanation" }
-    ]
-  },
-  {
-    name: "Sarah",
-    emoji: "🦋",
-    evidence: [
-      { question: "Q1", text: "Sarah's Q1 evidence", type: "secondary", why: "Explanation" },
-      { question: "Q2", text: "Sarah's Q2 evidence", type: "primary", why: "Explanation" },
-      { question: "Q3", text: "Sarah's Q3 evidence", type: "secondary", why: "Explanation" }
-    ]
-  },
-  {
-    name: "Bekim",
+    name: "Josue",
     emoji: "⭐",
     evidence: [
-      { question: "Q1", text: "Bekim's Q1 evidence", type: "primary", why: "Explanation" },
-      { question: "Q2", text: "Bekim's Q2 evidence", type: "secondary", why: "Explanation" },
-      { question: "Q3", text: "Bekim's Q3 evidence", type: "primary", why: "Explanation" }
+      { question: "Q1", text: "Josue's Q1 evidence", type: "primary", why: "Explanation" },
+      { question: "Q2", text: "Josue's Q2 evidence", type: "secondary", why: "Explanation" },
+      { question: "Q3", text: "Josue's Q3 evidence", type: "primary", why: "Explanation" }
     ]
   },
   {
-    name: "Evan",
-    emoji: "🏈",
+    name: "Emmalie",
+    emoji: "⭐",
     evidence: [
-      { question: "Q1", text: "Evan's Q1 evidence", type: "secondary", why: "Explanation" },
-      { question: "Q2", text: "Evan's Q2 evidence", type: "primary", why: "Explanation" },
-      { question: "Q3", text: "Evan's Q3 evidence", type: "secondary", why: "Explanation" }
+      { question: "Q1", text: "Emmalie's Q1 evidence", type: "secondary", why: "Explanation" },
+      { question: "Q2", text: "Emmalie's Q2 evidence", type: "primary", why: "Explanation" },
+      { question: "Q3", text: "Emmalie's Q3 evidence", type: "secondary", why: "Explanation" }
+    ]
+  },
+  {
+    name: "Brooks",
+    emoji: "⭐",
+    evidence: [
+      { question: "Q1", text: "Brooks' Q1 evidence", type: "primary", why: "Explanation" },
+      { question: "Q2", text: "Brooks' Q2 evidence", type: "secondary", why: "Explanation" },
+      { question: "Q3", text: "Brooks' Q3 evidence", type: "primary", why: "Explanation" }
+    ]
+  },
+  {
+    name: "Naomi",
+    emoji: "⭐",
+    evidence: [
+      { question: "Q1", text: "Naomi's Q1 evidence", type: "secondary", why: "Explanation" },
+      { question: "Q2", text: "Naomi's Q2 evidence", type: "primary", why: "Explanation" },
+      { question: "Q3", text: "Naomi's Q3 evidence", type: "secondary", why: "Explanation" }
     ]
   }
 ];
