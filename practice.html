@@ -58,8 +58,6 @@
         <label>Select Unit Question</label>
         <select id="topicSwitch" onchange="exitGame()">
             <option value="Q1">Q1</option>
-            <!-- When Q2/Q3 are ready: add a "Q2" / "Q3" entry in the database below,
-                 then add a matching <option value="Q2">Q2</option> line here. -->
         </select>
     </div>
 
@@ -80,11 +78,11 @@ const database = {
     "Q1": {
         match: [
             {t: "Democracy in America (Vol. 1)", d: "Tocqueville (1835): the majority fences in opinion; dissenters are punished socially, not legally. 'Little independence of mind' in America."},
-            {t: "Tyranny of the Majority", d: "Tocqueville's core fear: social pressure and fear of disapproval, not force, make minorities self-censor and conform."},
+            {t: "Tyranny of the Majority", d: "Tocqueville's core fear: social pressure and fear of disapproval, not force, make minorities self censor and conform."},
             {t: "Soft Despotism", d: "Tocqueville (Vol. 2, 1840): a gentle, paternalistic state that smothers initiative with comfort and regulation. A separate danger from majority pressure."},
             {t: "Popular Sovereignty", d: "Rule by the people's consent; Tocqueville warned it makes the majority seem always right, leaving dissent little moral standing."},
             {t: "Infallibility Complex", d: "The belief that a ruling majority or government cannot err; it turns dissent into wrongdoing rather than disagreement."},
-            {t: "Spiral of Silence", d: "Noelle-Neumann: people who think their view is unpopular stay quiet, so it looks even less popular. Social control without law."},
+            {t: "Spiral of Silence", d: "Noelle Neumann: people who think their view is unpopular stay quiet, so it looks even less popular. Social control without law."},
             {t: "Federalist 51", d: "Madison: separated powers and a large, varied republic make it hard for a tyrannical majority to form. Structure checks government, not neighbors."},
             {t: "Spirit of the Laws (1748)", d: "Montesquieu: liberty is security of mind, so no one need fear another. Tocqueville applied this to fear of the majority."},
             {t: "Institutional Safeguards", d: "Bill of Rights, judicial review, and the Senate restrain majorities. Tocqueville added juries, local government, and a free press."},
@@ -94,31 +92,31 @@ const database = {
             {t: "Licensing Act of 1662", d: "English law requiring licenses to print: state censorship, the older danger. Tocqueville said democratic majorities need no censor."},
             {t: "Tocqueville and Partisanship", d: "Tocqueville warned republican principles could perish only after a long period of social upheaval; the article applies this to today's polarization."},
             {t: "Federalist 10", d: "Madison: a large republic with many interests keeps any one faction, including a majority, from controlling government."},
-            {t: "The Liberator (1831)", d: "Garrison's immediate-abolition paper; a Boston mob nearly lynched him in 1835. The press let a hated minority view reach the public."},
+            {t: "The Liberator (1831)", d: "Garrison's immediate abolition paper; a Boston mob nearly lynched him in 1835. The press let a hated minority view reach the public."},
             {t: "The North Star (1847)", d: "Frederick Douglass, formerly enslaved, used his paper to attack slavery and press for equality for Black Americans and women."},
             {t: "Pennsylvania Hall (1838)", d: "Abolitionist hall burned by a mob on May 17, days after opening. No law was used; the majority silenced dissent by force."},
-            {t: "Congressional Gag Rule", d: "House rule (1836-1844) tabling antislavery petitions without debate; John Quincy Adams fought it as a violation of the right to petition."},
+            {t: "Congressional Gag Rule", d: "House rule (1836 to 1844) tabling antislavery petitions without debate; John Quincy Adams fought it as a violation of the right to petition."},
             {t: "Seneca Falls (1848)", d: "Declaration of Sentiments demanded women's rights, including the vote, against a majority that excluded women from politics."},
             {t: "Susan B. Anthony", d: "Voted in 1872 and was arrested, tried, and fined $100. Her trial used civil disobedience to challenge the exclusion of women."},
             {t: "Alien and Sedition Acts (1798)", d: "Federalist majority criminalized criticism of the government; prosecutions mostly targeted opposition editors."},
             {t: "Sedition Act (1918)", d: "Added to the 1917 Espionage Act; criminalized 'disloyal' or abusive speech about the government and military during World War I."},
-            {t: "Debs v. United States", d: "1919: unanimous Court upheld Debs's 10-year sentence for an antiwar speech, in a wartime climate of intolerance."},
-            {t: "Jim Crow Era", d: "White-controlled legislatures passed segregation laws, poll taxes, and literacy tests: majority rule used to silence a minority's vote."},
+            {t: "Debs v. United States", d: "1919: unanimous Court upheld Debs's 10 year sentence for an antiwar speech, in a wartime climate of intolerance."},
+            {t: "Jim Crow Era", d: "White controlled legislatures passed segregation laws, poll taxes, and literacy tests: majority rule used to silence a minority's vote."},
             {t: "Drum Major Instinct (MLK)", d: "King's 1968 sermon: craving the crowd's approval keeps people from standing for justice. Conscience over popularity."},
-            {t: "Hays Code", d: "Hollywood's self-censorship code (written 1930, enforced 1934-1968) barred content outside majority norms, such as interracial romance."},
+            {t: "Hays Code", d: "Hollywood's self censorship code (written 1930, enforced 1934 to 1968) barred content outside majority norms, such as interracial romance."},
             {t: "Labor Rights Advocacy", d: "Workers organizing for fair pay and safety faced firings, injunctions, and violence until the Wagner Act (1935) protected unions."},
-            {t: "Karen Silkwood", d: "1974: Kerr-McGee plant worker reported plutonium safety violations to regulators; died in a disputed car crash."},
+            {t: "Karen Silkwood", d: "1974: Kerr McGee plant worker reported plutonium safety violations to regulators; died in a disputed car crash."},
             {t: "Silent Spring (1962)", d: "Rachel Carson challenged pesticide use and drew attacks from the chemical industry, but shifted public opinion."},
             {t: "Tinker v. Des Moines", d: "1969: suspended students' Vietnam armbands protected; students do not shed speech rights at the schoolhouse gate."},
             {t: "Pentagon Papers (1971)", d: "Ellsberg leaked a secret Vietnam study showing government deception; charged under the Espionage Act, dismissed in 1973."},
-            {t: "NYT v. United States", d: "1971 (6-3): government could not block the Pentagon Papers; a 'heavy presumption' against prior restraint. Courts can check the government."},
+            {t: "NYT v. United States", d: "1971 (6 to 3): government could not block the Pentagon Papers; a 'heavy presumption' against prior restraint. Courts can check the government."},
             {t: "Edward Snowden (2013)", d: "Leaked NSA mass surveillance programs; a 2020 federal appeals court ruled the bulk phone collection program unlawful."},
             {t: "Twitter v. Taamneh", d: "2023: unanimous Court held platforms hosting and recommending content were not liable for aiding an ISIS attack."},
             {t: "Lindke v. Freed", d: "2024: officials violate the First Amendment by blocking critics only if they have authority to speak for the state and used it."},
             {t: "Jawboning", d: "Officials pressure private platforms to remove speech without passing a law, so censorship looks like a voluntary business decision."},
-            {t: "Cancel Culture", d: "Online pile-ons punish unpopular views through social cost; critics see Tocqueville's social tyranny, defenders see accountability."},
+            {t: "Cancel Culture", d: "Online pile ons punish unpopular views through social cost; critics see Tocqueville's social tyranny, defenders see accountability."},
             {t: "Soft Tyranny / Illiberal Democracy", d: "Elections continue while liberties erode. Russia's 'foreign agent' laws restrict NGOs and media through labels, fines, and closures."},
-            {t: "Trump Administration Media Ban", d: "Administration restricted White House access for outlets (CNN, MS NOW, Politico), citing national security; a press-access test case."},
+            {t: "Trump Administration Media Ban", d: "Administration restricted White House access for outlets (CNN, MS NOW, Politico), citing national security; a press access test case."},
             {t: "Pew: Censorship of News", d: "Only 36% say people with their political views are very free to speak openly; 76% say social media firms sometimes withhold news."}
         ],
         sort: [
