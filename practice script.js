@@ -4,39 +4,39 @@ alert("Practice Script Loaded");
 // ===== Team Data =====
 const teamMembers = [
   {
-    name: "Luna",
-    emoji: "🦭",
-    practice: [
-      { question: "Q1", content: "Luna's Q1 practice content" },
-      { question: "Q2", content: "Luna's Q2 practice content" },
-      { question: "Q3", content: "Luna's Q3 practice content" }
-    ]
-  },
-  {
-    name: "Sarah",
-    emoji: "🦋",
-    practice: [
-      { question: "Q1", content: "Sarah's Q1 practice content" },
-      { question: "Q2", content: "Sarah's Q2 practice content" },
-      { question: "Q3", content: "Sarah's Q3 practice content" }
-    ]
-  },
-  {
-    name: "Bekim",
+    name: "Josue",
     emoji: "⭐",
     practice: [
-      { question: "Q1", content: "Bekim's Q1 practice content" },
-      { question: "Q2", content: "Bekim's Q2 practice content" },
-      { question: "Q3", content: "Bekim's Q3 practice content" }
+      { question: "Q1", content: "Josue's Q1 practice content" },
+      { question: "Q2", content: "Josue's Q2 practice content" },
+      { question: "Q3", content: "Josue's Q3 practice content" }
     ]
   },
   {
-    name: "Evan",
-    emoji: "🏈",
+    name: "Emmalie",
+    emoji: "⭐",
     practice: [
-      { question: "Q1", content: "Evan's Q1 practice content" },
-      { question: "Q2", content: "Evan's Q2 practice content" },
-      { question: "Q3", content: "Evan's Q3 practice content" }
+      { question: "Q1", content: "Emmalie's Q1 practice content" },
+      { question: "Q2", content: "Emmalie's Q2 practice content" },
+      { question: "Q3", content: "Emmalie's Q3 practice content" }
+    ]
+  },
+  {
+    name: "Brooks",
+    emoji: "⭐",
+    practice: [
+      { question: "Q1", content: "Brooks' Q1 practice content" },
+      { question: "Q2", content: "Brooks' Q2 practice content" },
+      { question: "Q3", content: "Brooks' Q3 practice content" }
+    ]
+  },
+  {
+    name: "Naomi",
+    emoji: "⭐",
+    practice: [
+      { question: "Q1", content: "Naomi's Q1 practice content" },
+      { question: "Q2", content: "Naomi's Q2 practice content" },
+      { question: "Q3", content: "Naomi's Q3 practice content" }
     ]
   }
 ];
